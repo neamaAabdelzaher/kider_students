@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teacher;
 use Illuminate\Http\Request;
+use App\Traits\UploadFiles;
+use PHPUnit\Event\Code\Test;
 
 class teachersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+     use UploadFiles;
     public function index()
     {
-        return view('dashboard.teachers.index');
+      
+        $teachers=Teacher::get();
+        return view('dashboard.teachers.index',compact('teachers'));
     }
 
     /**
@@ -27,7 +34,24 @@ class teachersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    
+       
+        $validationMessages=$this->messages();
+          $data=$request->validate([
+            'name'=>'required|max:50',
+            'title'=>'required|max:50',
+            'image'=>'required|mimes:png,jpg,jpeg|max:2048',
+            'facebook'=>'required',
+            'twitter'=>'required',
+            'instagram'=>'required'
+          ],$validationMessages);
+
+          $destinationPath='assets/dashboard/img';
+          $fileName=$this->uploadFile($request->image ,$destinationPath);
+          $data['image']="$fileName";
+          Teacher::create($data);   
+          return redirect()->route('teachers.index');
+
     }
 
     /**
@@ -35,7 +59,10 @@ class teachersController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $teacher=Teacher::findOrFail($id);
+
+        return view('dashboard.teachers.show',compact('teacher'));
+
     }
 
     /**
@@ -60,5 +87,26 @@ class teachersController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+
+    public function messages(){
+
+        return [
+
+
+            "name.required"=> "teacher name is required",
+            "name.max"=> "teacher name less than 50 letters",
+            "title.required"=> "teacher title is required",
+            "title.max"=> "teacher title less than 50 letters",
+            "facebook.required"=> "facebook is required",
+            "twitter.required"=> "twitter is required",
+            "instagram.required"=> "instagram title is required",
+             'image.required'=>'choose image',
+             'image.mimes'=>'image extension must be png,jpg or jpeg ',
+             'image.max'=>'image max size 2GB',
+
+        ];
     }
 }

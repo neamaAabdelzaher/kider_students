@@ -22,9 +22,10 @@ Route::get('/', function () {
 
 Route::prefix('dashboard')->group(function () {
     Route::prefix('/teachers')->group(function () {
-    Route::get('/index',[teachersController::class,'index']);
+    Route::get('/index',[teachersController::class,'index'])->name('teachers.index');
     Route::get('/create',[teachersController::class,'create']);
-   
+    Route::post('/store',[teachersController::class,'store'])->name('teachers.store');
+    Route::get('/show/{teacher_id}',[teachersController::class,'show'])->name('teachers.show');
     });
 });
 
