@@ -1,26 +1,35 @@
 @extends('Layouts.parent')
-@section('title', 'Create Teachers')
+@section('title', 'Create Subject')
 
 @section('content')
 <div class="col-sm-12 col-xl-6">
     <div class="bg-secondary rounded h-100 p-4">
-        <h6 class="mb-4">Add Teacher</h6>
-        <form method="post" action="{{route('dashboard.teachers.store')}}" enctype="multipart/form-data" >
+        <h6 class="mb-4">Add Subject</h6>
+        <form method="post" action="" enctype="multipart/form-data" >
             @csrf
             <div class="mb-3">
-                <label for="teacher_name" class="form-label"  >Teacher Name</label>
-                <input type="text" name="name" class="form-control" value="{{old('name')}}" id="teacher_name">
+                <label for="subject_name" class="form-label"  >Subject Name</label>
+                <input type="text" name="subjectName" class="form-control" value="{{old('subjectName')}}" id="subject_name">
                 
             </div>
-            @error('name')
+            @error('subjectName')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
             <div class="mb-3">
-                <label for="teacher_title" class="form-label">Teacher Title</label>
-                <input type="text" name="title" value="{{old('title')}}" class="form-control" id="teacher_title">
+                <label for="age_from" class="form-label">Age From</label>
+                <input type="number" name="ageFrom" value="{{old('ageFrom')}}" class="form-control" id="age_from">
                 
             </div>
-            @error('title')
+            @error('ageFrom')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+            
+            <div class="mb-3">
+                <label for="age_to" class="form-label">Age To</label>
+                <input type="number" name="ageTo" value="{{old('ageTo')}}" class="form-control" id="age_to">
+                
+            </div>
+            @error('ageTo')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
