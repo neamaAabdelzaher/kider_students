@@ -5,7 +5,7 @@
 <div class="col-sm-12 col-xl-6">
     <div class="bg-secondary rounded h-100 p-4">
         <h6 class="mb-4">Add Subject</h6>
-        <form method="post" action="" enctype="multipart/form-data" >
+        <form method="post" action="{{route('dashboard.subjects.store')}}" enctype="multipart/form-data" >
             @csrf
             <div class="mb-3">
                 <label for="subject_name" class="form-label"  >Subject Name</label>
@@ -34,41 +34,57 @@
         @enderror
 
             <div class="mb-3">
-                <label for="formFile" class="form-label">Image</label>
-                <input class="form-control bg-dark" value="{{old('image')}}" name="image" type="file" id="formFile">
+                <label for="timeFrom" class="form-label">time From</label>
+                <input type="time" class="form-control bg-dark" value="{{old('timeFrom')}}" name="timeFrom"  id="timeFrom">
             </div>
-            @error('image')
+            @error('timeFrom')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+            <div class="mb-3">
+                <label for="timeTo" class="form-label">time To</label>
+                <input type="time" class="form-control bg-dark" value="{{old('timeTo')}}" name="timeTo"  id="timeTo">
+            </div>
+            @error('timeTo')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
             <div class="mb-3">
-                <label for="facebook" class="form-label">Facebook</label>
-                <input type="text" name="facebook" value="{{old('facebook')}}" class="form-control" id="facebook">
+                <label for="capacity" class="form-label">capacity</label>
+                <input type="number" name="capacity" value="{{old('capacity')}}" class="form-control" id="capacity">
                 
             </div>
-            @error('facebook')
+            @error('capacity')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
             
 
             <div class="mb-3">
-                <label for="twitter" class="form-label">Twitter</label>
-                <input type="text" name="twitter" value="{{old('twitter')}}" class="form-control" id="twitter">
+                <label for="price" class="form-label">price</label>
+                <input type="text" name="price" value="{{old('price')}}" class="form-control" id="price">
                 
             </div>
-            @error('twitter')
+            @error('price')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-            
 
-            <div class="mb-3">
-                <label for="instagram" class="form-label">Instagram</label>
-                <input type="text" name="instagram" value="{{old('instagram')}}" class="form-control" id="instagram">
-                
-            </div>
-            @error('instagram')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+
+        <div class="form-group">
+            <label for="category">Select Teacher</label>
+               <select name="teacher_id" id="teacher_id" >
+                  <option readonly value="">select</option>
+                  @foreach($teachers as $teacher)
+                  <option value="{{$teacher->id}}">{{$teacher->name}}</option>
+                    @endforeach
+              </select>
+                  @error('teacher_id')
+                   <div class="alert alert-danger" role="alert">
+                    {{$message}}
+                  </div>
+                  @enderror
+                </div>
+            
+        
+      
             
             <button type="submit"  class="btn btn-primary"> Add </button>
         </form>

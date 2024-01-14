@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\teachersController;
 use App\Http\Controllers\DashboardController;
 
@@ -24,7 +25,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'dashboard', "as" => "dashboard"], function () {
 
-      Route::get('/', [DashboardController::class, 'index']);
+      Route::get('/', [DashboardController::class, 'index'])->name('.index');
       Route::group(['prefix' => 'teachers', 'as' => '.teachers.'], function () {
         Route::get('/', [teachersController::class, 'index'])->name('index');
         Route::get('/create', [teachersController::class, 'create'])->name('create');
@@ -35,6 +36,12 @@ Route::group(['prefix' => 'dashboard', "as" => "dashboard"], function () {
         Route::delete('/delete', [teachersController::class,'destroy'])->name('delete');
     });
 
+    Route::group(['prefix' => 'subjects', 'as' => '.subjects.'], function () {
+        Route::get('/', [SubjectsController::class, 'index'])->name('index');
+        Route::get('/create', [SubjectsController::class, 'create'])->name('create');
+        Route::post('/store', [SubjectsController::class, 'store'])->name('store');
+
+});
 });
 
 
