@@ -13,6 +13,9 @@ class SubjectsController extends Controller
      */
     public function index()
     {
+
+        $subjects=Teacher::get();
+        return view('dashboard.subjects.index',compact('subjects'));
        
     }
 
